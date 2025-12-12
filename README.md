@@ -27,6 +27,8 @@
 - быстрый rollback обратно на blue
 
 ---
+<img width="974" height="582" alt="image" src="https://github.com/user-attachments/assets/6fc360cd-0cc2-4c16-87eb-528189367b1f" />
+
 
 ## 2) Структура проекта
 
@@ -94,12 +96,6 @@ Blue: MODEL_VERSION=v1.0.0
 Green: MODEL_VERSION=v1.1.0
 
 Green-версия дополнительно возвращает "color":"green" в /health для наглядного подтверждения переключения.
-
-
-<img width="974" height="582" alt="image" src="https://github.com/user-attachments/assets/b8a776f5-6beb-4765-bed9-1fc6ef985695" />
-
-
-
 
 ## Logs
 Логи пишутся в stdout контейнера (Docker собирает их автоматически).
