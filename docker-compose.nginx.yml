@@ -1,0 +1,12 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+    depends_on:
+      blue:
+        condition: service_healthy
+      green:
+        condition: service_healthy

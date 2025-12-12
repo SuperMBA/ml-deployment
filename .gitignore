@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+.DS_Store
+
+# model artifacts (можно хранить, но лучше не в git)
+app/model.pkl
+app_green/model.pkl

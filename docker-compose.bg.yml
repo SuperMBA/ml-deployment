@@ -1,0 +1,40 @@
+services:
+  blue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MODEL_VERSION=v1.0.0
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  green:
+    build:
+      context: .
+      dockerfile: Dockerfile.green
+    environment:
+      - MODEL_VERSION=v1.1.0
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+    depends_on:
+      blue:
+        condition: service_healthy
+      green:
+        condition: service_healthy
