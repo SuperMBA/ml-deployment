@@ -101,5 +101,15 @@ Green-версия дополнительно возвращает "color":"gree
 
 
 
+## Logs
+Логи пишутся в stdout контейнера (Docker собирает их автоматически).
+Посмотреть:
+- docker compose -f docker-compose.bg.yml logs -f blue
+- docker compose -f docker-compose.bg.yml logs -f green
+- docker compose -f docker-compose.bg.yml logs -f nginx
+
+
+
+
 
 
