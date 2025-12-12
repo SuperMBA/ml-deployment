@@ -7,11 +7,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 
-# --- logging ---
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ml")
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
+
+# ✅ Instrumentator должен быть ДО старта приложения
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 MODEL_VERSION = os.getenv("MODEL_VERSION", "v1.0.0")
 model = joblib.load("model.pkl")
@@ -29,13 +31,6 @@ def health():
 @app.post("/predict")
 def predict(req: PredictRequest):
     logger.info("predict request x=%s version=%s", req.x, MODEL_VERSION)
-
     preds = model.predict(np.array(req.x).reshape(-1, 1)).tolist()
-
     logger.info("predict response preds=%s version=%s", preds, MODEL_VERSION)
     return {"predictions": preds, "model_version": MODEL_VERSION}
-
-
-@app.on_event("startup")
-def _startup():
-    Instrumentator().instrument(app).expose(app, endpoint="/metrics")
