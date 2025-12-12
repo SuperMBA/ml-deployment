@@ -12,6 +12,9 @@ logger = logging.getLogger("ml")
 
 app = FastAPI()
 
+# ✅ ВАЖНО: ДО старта приложения
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+
 MODEL_VERSION = os.getenv("MODEL_VERSION", "v1.1.0")
 model = joblib.load("model.pkl")
 
@@ -31,8 +34,3 @@ def predict(req: PredictRequest):
     preds = model.predict(np.array(req.x).reshape(-1, 1)).tolist()
     logger.info("predict response preds=%s version=%s", preds, MODEL_VERSION)
     return {"predictions": preds, "model_version": MODEL_VERSION}
-
-
-@app.on_event("startup")
-def _startup():
-    Instrumentator().instrument(app).expose(app, endpoint="/metrics")
