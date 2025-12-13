@@ -48,14 +48,15 @@
 
 ```bash
 docker compose -f docker-compose.bg.yml up --build -d
----
+
+```
 
 ### Проверка состояния
 
 ```bash
 curl -s http://127.0.0.1:8080/health && echo
 
----
+```
 
 ### Проверка предсказаний
 
@@ -63,7 +64,7 @@ curl -s http://127.0.0.1:8080/health && echo
 curl -s -X POST http://127.0.0.1:8080/predict \
   -H "Content-Type: application/json" \
   -d '{"x":[1,2,3]}' && echo
----
+```
 
 ## 4) Переключение Blue ↔ Green (без даунтайма)
 
@@ -76,18 +77,18 @@ curl -s -X POST http://127.0.0.1:8080/predict \
 ```bash
 proxy_pass http://blue:8080;
 
----
+```
 на green:
 ```bash
 proxy_pass http://green:8080;
 
----
+```
 
 После изменения делаем reload nginx:
 
 ```bash
 docker compose -f docker-compose.bg.yml exec nginx nginx -s reload
----
+```
 
 ## Версии
 
