@@ -105,6 +105,9 @@ Green-версия дополнительно возвращает "color":"gree
 - docker compose -f docker-compose.bg.yml logs -f green
 - docker compose -f docker-compose.bg.yml logs -f nginx
 
+  ## Render
+  https://dashboard.render.com/web/srv-d4u7e6vpm1nc739a542g/settings#build-&-deploy
+
 
 
 
